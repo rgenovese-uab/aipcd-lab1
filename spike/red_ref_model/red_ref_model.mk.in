@@ -1,0 +1,22 @@
+red_ref_model_subproject_deps =
+
+red_ref_model_hdrs = \
+    reduction_op.h \
+    reduction_defines.h \
+    reduction_types.h \
+    bf16_cpfloat/bf16.h \
+    softfloat/softfloat.h \
+    softfloat_8/softfloat.h \
+
+red_ref_model_srcs = \
+    reduction.cc \
+    reduction_op.cc \
+    reduction_log.cc \
+
+red_ref_model_CPPFLAGS = -fPIC -O0 -g
+
+red_ref_model_install_shared_lib = yes
+
+red_ref_model_test_srcs =
+
+red_ref_model_install_prog_srcs =

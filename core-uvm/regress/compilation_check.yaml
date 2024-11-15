@@ -1,0 +1,7 @@
+name: ka_env_check
+description: Ka core Verification evnironment compilation check
+type: build
+
+builds:
+  compile-env:
+    cmd: make comp_verif

@@ -1,0 +1,44 @@
+include:
+  - project: 'hwdesign/ci/generic_ci'
+    ref: $GENERIC_CI_BRANCH # defined in hwdesign group
+    file:
+      - jobs_template.yml
+
+workflow:
+  rules:
+    - !reference [.rules, global_std]
+
+stages:
+  - test
+
+.rules_default:
+    - if: ($CI_PIPELINE_SOURCE == "schedule")
+      when: always
+    - if: ($CI_PIPELINE_SOURCE == "merge_request_event")
+      when: always
+    - if: $CI_PIPELINE_SOURCE == "pipeline"
+      when: always
+
+smoke_test_sargantana:
+  stage: test
+  rules:
+    - !reference [.rules_default]
+  variables:
+    CORE_UVM_BRANCH: $CI_COMMIT_REF_NAME
+    CORE_TYPE: sargantana
+  trigger:
+    project: hwdesign/rtl/core-tile/sargantana_tile
+    branch: develop
+    strategy: depend
+
+smoke_test_ka:
+  stage: test
+  rules:
+    - !reference [.rules_default]
+  variables:
+    CORE_UVM_BRANCH: $CI_COMMIT_REF_NAME
+    CORE_TYPE: lagarto_ka
+  trigger:
+    project: hwdesign/rtl/core-tile/lagarto_ka-tile
+    branch: master
+    strategy: depend

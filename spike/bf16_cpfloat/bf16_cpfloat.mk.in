@@ -1,0 +1,20 @@
+bf16_cpfloat_subproject_deps =
+
+bf16_cpfloat_hdrs = \
+    bf16.h \
+    cpfloat_binary32.h \
+    cpfloat_definitions \
+    cpfloat_docmacros.h \
+    cpfloat_template.h \
+    cpfloat_threshold_binary32.h \
+
+bf16_cpfloat_c_srcs = \
+    bf16.c \
+
+bf16_cpfloat_CFLAGS = -fPIC -lm
+
+bf16_cpfloat_install_shared_lib = yes
+
+bf16_cpfloat_test_srcs =
+
+bf16_cpfloat_install_prog_srcs =

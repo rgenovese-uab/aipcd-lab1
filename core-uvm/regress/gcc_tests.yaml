@@ -1,0 +1,8 @@
+name: ka_gcc_tests
+description: Selected tests from the GCC testsuite to test the Ka core
+type: test
+
+tests:
+  rtype: set
+  tests: tests/build/gcc_tests
+  cmd: make run

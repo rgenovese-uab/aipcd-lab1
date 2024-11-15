@@ -1,0 +1,7 @@
+-f ${incdirfilelist}
+-F ${rtlfilelist}
+-f ${tbfilelist}
+-f ${coreenvfilelist}
+-f ${targetenvfilelist}
+-f ${coreuvmfilelist}
+-f ${targetuvmfilelist}

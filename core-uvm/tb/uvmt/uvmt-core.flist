@@ -1,0 +1,5 @@
++incdir+$(VERIF)/tb/uvmt/
++incdir+$(VERIF)/tb/uvmt/design/
+$(VERIF)/tb/uvmt/uvmt_pkg.sv
+$(VERIF)/tb/uvmt/core_interface.sv
+$(VERIF)/tb/dut/boot_rom.sv

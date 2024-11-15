@@ -1,0 +1,11 @@
+name: ka_selected_check
+description: Ka core Risc-v isa tests
+type: test
+
+tests:
+    build: compile-env
+    rtype: set
+    test: tests/build/random_selection
+    cmd: make run
+    args:
+        - SEED=1    

@@ -1,0 +1,10 @@
+name: sargantana_env_comp
+description: Sargantana core Verification environment compilation
+type: build
+
+builds:
+  compile-env:
+    cmd: make
+    args:
+        - compile_all
+        - CORE_TYPE=sargantana

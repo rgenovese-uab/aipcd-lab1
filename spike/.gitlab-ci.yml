@@ -1,0 +1,184 @@
+include:
+  - project: 'hwdesign/ci/generic_ci'
+    ref: $GENERIC_CI_BRANCH # defined in hwdesign group
+    file:
+      - jobs_template.yml 
+
+workflow:
+  rules:
+    - !reference [.rules, global_std]
+
+.rules_default:
+  - if: ($CI_PIPELINE_SOURCE == "merge_request_event" ||
+         $CI_PIPELINE_SOURCE == "pipeline" ||
+        $do_test || $CI_COMMIT_MESSAGE =~ /#do_test/)
+    when: on_success
+
+.rules_publish:
+  - if: ($do_skip_publish || $CI_COMMIT_MESSAGE =~ /#do_skip_publish/)
+    when: never
+  - if: ($CI_COMMIT_BRANCH =~ /(master_bsc|update-ci|-pkg$)/ ) ||
+         ($do_publish || $CI_COMMIT_MESSAGE =~ /#do_publish/)
+    when: on_success
+
+.rules_cleanup:
+  - if: ($do_skip_test || $CI_COMMIT_MESSAGE =~ /#do_skip_test/)
+    when: never
+  - if: ($do_skip_publish || $CI_COMMIT_MESSAGE =~ /#do_skip_publish/)
+    when: never   
+  - if: ($CI_PIPELINE_SOURCE == "merge_request_event" ||
+         $CI_PIPELINE_SOURCE == "pipeline" ||
+        $do_test || $CI_COMMIT_MESSAGE =~ /#do_test/)
+    when: always
+
+.rules_test:
+  - if: ($do_skip_test || $CI_COMMIT_MESSAGE =~ /#do_skip_test/) 
+    when: never
+  - if: ($CI_JOB_STAGE == "test" && $do_test && $do_test !~ /(all|true)/ && $do_test != $CI_JOB_NAME)
+    when: never
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - uploadtemp 
+  - test
+  - upload
+  - cleantemp
+
+build-job:
+  extends: .riscv
+  stage: build
+  rules:
+    - !reference [.rules_default]
+    - !reference [.rules_publish]
+  variables:
+    COMPILE_TAG: "epi"
+    gcc_version: "10.5.0"
+  script:
+    - PKG_NAME=$(echo "${PIPELINE_BRANCH}" | sed 's/\//-/g;s/#/-/g')
+    - PKG_NAME_TMP=${PKG_NAME}-tmp
+    - PKG_URL_TMP="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PKG_NAME_TMP}/0.0.1/"
+    - PKG_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PKG_NAME}/0.0.1/"
+    - echo "PKG_URL_TMP=${PKG_URL_TMP}" >> vars.env
+    - echo "PKG_URL=${PKG_URL}" >> vars.env
+    - echo "PKG_NAME_TMP=${PKG_NAME_TMP}" >> vars.env
+    - echo "PKG_NAME=${PKG_NAME}" >> vars.env
+    - cat vars.env 
+    #- apt-get install -y g++-9 gcc-9 cpp-9
+    #- update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 10 --slave /usr/bin/g++ g++ /usr/bin/g++-9 --slave /usr/bin/gcov gcov /usr/bin/gcov-9
+    #- update-alternatives --set gcc /usr/bin/gcc-9
+    - gcc --version
+    - mkdir -p build files
+    - echo "Compiling the code for spike.so ..."
+    - ./compile.sh -t $COMPILE_TAG -b dpi $PARALLEL_CMD
+    - cp build/spike.so files/
+    - echo "Compiling the code for spike"
+    - ./compile.sh -t $COMPILE_TAG -b debug $PARALLEL_CMD
+    - cp -r build/spike files/
+    - cp build/spike.info files/
+    - echo "Compile complete." 
+  artifacts:
+    untracked: true
+    reports:
+        dotenv: vars.env
+    paths:
+      - ./*
+
+upload-temp-job:
+  extends: .basic
+  stage: uploadtemp
+  rules:
+    - !reference [.rules_test]
+    - !reference [.rules_default]
+  script:
+    - echo ${PKG_URL_TMP}
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file  files/spike.so "${PKG_URL_TMP}"/spike.so'
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file  files/spike "${PKG_URL_TMP}"/spike'
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file  files/spike.info "${PKG_URL_TMP}"/spike.info'
+    - echo "Application successfully uploaded."
+
+.integration:
+  stage: test
+  variables:
+  rules:
+    - !reference [.rules_test]    
+    - !reference [.rules_default]
+  trigger:
+    strategy: depend
+
+test-epac2:
+  extends: .integration
+  variables:
+    SPIKE_URL_BASE: ${PKG_URL_TMP}/spike
+  trigger:
+    project: hwdesign/verification/epac2-vpu-dv
+    branch: main
+
+test-epac:
+  extends: .integration
+  variables:
+    SPIKE_URL_BASE: ${PKG_URL_TMP}/spike
+  trigger:
+    project: hwdesign/verification/epac-vpu-dv
+    branch: perte-rvv-1.0
+
+#test-cpu-subsystem:
+#  extends: .integration
+#  variables:
+#    SPIKE_URL_BASE: ${PKG_URL_TMP}/spike
+#  trigger:
+#    project: hwdesign/verification/cpu-subsystem-uvm
+#    branch: op_subsystem_vcs-debug-mode
+#
+#test-lagarto-ka:
+#  extends: .integration
+#  variables:
+#    SPIKE_URL_BASE: ${PKG_URL_TMP}/spike
+#  trigger:
+#    project: hwdesign/rtl/core-tile/lagarto_ka-tile
+#    branch: master
+#    strategy: depend
+
+test-sargantana:
+  extends: .integration
+  variables:
+    SPIKE_URL_BASE: ${PKG_URL_TMP}/spike
+  trigger:
+    project: hwdesign/rtl/core-tile/sargantana_tile
+    branch: main
+    strategy: depend
+
+test-lagarto-ox:
+  extends: .integration
+  variables:
+    SPIKE_URL_BASE: ${PKG_URL_TMP}/spike
+  trigger:
+    project: hwdesign/rtl/core-tile/lagarto_ox_tile
+    branch: main
+    strategy: depend
+
+upload-job:
+  extends: .basic
+  stage: upload
+  rules:
+    - !reference [.rules_publish]
+  script:
+    - echo "Uploading application in Package Registry..."
+    - echo "PKG_URL is $PKG_URL"
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file  files/spike.so "${PKG_URL}"/spike.so'
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file  files/spike "${PKG_URL}"/spike'
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file  files/spike.info "${PKG_URL}"/spike.info'
+    - echo "Application successfully uploaded."
+
+clean-package-tmp:
+  extends: .basic
+  stage: cleantemp
+  rules:
+    - !reference [.rules_cleanup]
+  script:
+    - echo list of packages
+    - echo ${PKG_NAME_TMP}
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages" > response.json'
+    - echo "get package id"
+    - package_id=$(jq '.[] | select(.name=='\""${PKG_NAME_TMP}"\"') | .id' response.json)
+    - echo "package id-> ${package_id}"
+    - 'curl --request DELETE --header "JOB-TOKEN: $CI_JOB_TOKEN" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/${package_id}"'

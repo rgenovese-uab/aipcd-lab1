@@ -1,0 +1,14 @@
+//----------------------------------------------------------------------
+// Project       : standalone_core_dv_env
+// Unit          : uvme
+// File          : uvme.flist
+//----------------------------------------------------------------------
+// Created by    : Prashant Ahuja (BSC)
+// Creation Date : 18 Nov 2022 
+//----------------------------------------------------------------------
+// Description   : This file listdown all files useful in compilation. 
+//----------------------------------------------------------------------
+// Directories
++incdir+$(VERIF)/env
+
+${VERIF}/env/sargantana_uvm_pkg.sv

@@ -1,0 +1,6 @@
+${VERIF}/tb/dut/dut_sargantana_pkg.sv
+${VERIF}/tb/dut/checkers/riscv_isa_defs.sv
+${VERIF}/tb/dut/checkers/cov_isa.sv
+${VERIF}/tb/dut/checkers/cov_priv_isa.sv
+${VERIF}/tb/dut/checkers/cov_csr.sv
+// placeholder file

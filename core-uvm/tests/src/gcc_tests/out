@@ -1,0 +1,451 @@
+
+build/20000121-1.x:     file format elf64-littleriscv
+build/20000121-1.x
+architecture: riscv:rv64, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x0000000080000000
+
+Program Header:
+0x70000003 off    0x00000000000262b0 vaddr 0x0000000000000000 paddr 0x0000000000000000 align 2**0
+         filesz 0x000000000000002d memsz 0x0000000000000000 flags r--
+    LOAD off    0x0000000000001000 vaddr 0x0000000080000000 paddr 0x0000000080000000 align 2**12
+         filesz 0x0000000000000388 memsz 0x0000000000000388 flags r-x
+    LOAD off    0x0000000000002000 vaddr 0x0000000080001000 paddr 0x0000000080001000 align 2**12
+         filesz 0x00000000000242b0 memsz 0x00000000000242b0 flags rw-
+
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .init         00000388  0000000080000000  0000000080000000  00001000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .tohost       000000d0  0000000080001000  0000000080001000  00002000  2**6
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .got          00000028  0000000080002000  0000000080002000  00003000  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .got.plt      00000010  0000000080002028  0000000080002028  00003028  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .user_stack   00013878  0000000080002038  0000000080002038  00003038  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  5 .kernel_stack 0000fa00  00000000800158b0  00000000800158b0  000168b0  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .riscv.attributes 0000002d  0000000000000000  0000000000000000  000262b0  2**0
+                  CONTENTS, READONLY
+SYMBOL TABLE:
+0000000080000000 l    d  .init	0000000000000000 .init
+0000000080001000 l    d  .tohost	0000000000000000 .tohost
+0000000080002000 l    d  .got	0000000000000000 .got
+0000000080002028 l    d  .got.plt	0000000000000000 .got.plt
+0000000080002038 l    d  .user_stack	0000000000000000 .user_stack
+00000000800158b0 l    d  .kernel_stack	0000000000000000 .kernel_stack
+0000000000000000 l    d  .riscv.attributes	0000000000000000 .riscv.attributes
+0000000000000000 l    df *ABS*	0000000000000000 entry.o
+0000000080002038 l       .user_stack	0000000000000000 user_stack_start
+0000000080000020 l       .init	0000000000000000 trap_vec_init
+0000000080000030 l       .init	0000000000000000 _finish_loop_init_mem
+00000000800001b0 l       .init	0000000000000000 test_done
+000000008000017c l       .init	0000000000000000 ebreak_handler
+00000000800000b8 l       .init	0000000000000000 ecall_handler
+0000000080000144 l       .init	0000000000000000 instr_fault_handler
+000000008000014c l       .init	0000000000000000 load_fault_handler
+0000000080000164 l       .init	0000000000000000 store_fault_handler
+00000000800001a4 l       .init	0000000000000000 pt_fault_handler
+0000000080000190 l       .init	0000000000000000 illegal_instr_handler
+00000000800001b8 l       .init	0000000000000000 write_tohost
+000000008000bc70 l       .user_stack	0000000000000000 user_stack_end
+000000008000bc70 l       .user_stack	0000000000000000 kernel_instr_end
+00000000800158b0 l       .kernel_stack	0000000000000000 kernel_stack_start
+000000008001d5a8 l       .kernel_stack	0000000000000000 kernel_stack_end
+0000000000000000 l    df *ABS*	0000000000000000 entry.o
+000000008000bc74 l       .user_stack	0000000000000000 user_stack_start
+00000000800001e4 l       .init	0000000000000000 trap_vec_init
+00000000800001f4 l       .init	0000000000000000 _finish_loop_init_mem
+0000000080000374 l       .init	0000000000000000 test_done
+0000000080000340 l       .init	0000000000000000 ebreak_handler
+000000008000027c l       .init	0000000000000000 ecall_handler
+0000000080000308 l       .init	0000000000000000 instr_fault_handler
+0000000080000310 l       .init	0000000000000000 load_fault_handler
+0000000080000328 l       .init	0000000000000000 store_fault_handler
+0000000080000368 l       .init	0000000000000000 pt_fault_handler
+0000000080000354 l       .init	0000000000000000 illegal_instr_handler
+000000008000037c l       .init	0000000000000000 write_tohost
+00000000800158ac l       .user_stack	0000000000000000 user_stack_end
+00000000800158ac l       .user_stack	0000000000000000 kernel_instr_end
+000000008001d5b0 l       .kernel_stack	0000000000000000 kernel_stack_start
+00000000800252a8 l       .kernel_stack	0000000000000000 kernel_stack_end
+0000000080002000 l     O .got	0000000000000000 _GLOBAL_OFFSET_TABLE_
+0000000080000000 g       .init	0000000000000000 _start
+0000000080000050 g     F .init	0000000000000000 mmode_exception_handler
+00000000800252b0 g       .kernel_stack	0000000000000000 _end
+0000000080001040 g       .tohost	0000000000000000 fromhost
+0000000080001000 g       .tohost	0000000000000000 tohost
+00000000800001c0 g       .init	0000000000000000 _exit
+
+
+
+Disassembly of section .init:
+
+0000000080000000 <_start>:
+    80000000:	fff0099b          	addiw	s3,zero,-1
+    80000004:	03399993          	slli	s3,s3,0x33
+    80000008:	24198993          	addi	s3,s3,577
+    8000000c:	00c99993          	slli	s3,s3,0xc
+    80000010:	12d98993          	addi	s3,s3,301
+    80000014:	30199073          	csrw	misa,s3
+    80000018:	00002117          	auipc	sp,0x2
+    8000001c:	ff013103          	ld	sp,-16(sp) # 80002008 <_GLOBAL_OFFSET_TABLE_+0x8>
+
+0000000080000020 <trap_vec_init>:
+    80000020:	00002397          	auipc	t2,0x2
+    80000024:	0003b383          	ld	t2,0(t2) # 80002020 <_GLOBAL_OFFSET_TABLE_+0x20>
+    80000028:	0003e393          	ori	t2,t2,0
+    8000002c:	30539073          	csrw	mtvec,t2
+
+0000000080000030 <_finish_loop_init_mem>:
+    80000030:	002803b7          	lui	t2,0x280
+    80000034:	6213839b          	addiw	t2,t2,1569 # 280621 <_start-0x7fd7f9df>
+    80000038:	00e39393          	slli	t2,t2,0xe
+    8000003c:	e0038393          	addi	t2,t2,-512
+    80000040:	30039073          	csrw	mstatus,t2
+    80000044:	00000393          	li	t2,0
+    80000048:	30439073          	csrw	mie,t2
+    8000004c:	164000ef          	jal	ra,800001b0 <test_done>
+
+0000000080000050 <mmode_exception_handler>:
+    80000050:	341023f3          	csrr	t2,mepc
+    80000054:	342023f3          	csrr	t2,mcause
+    80000058:	00300213          	li	tp,3
+    8000005c:	12438063          	beq	t2,tp,8000017c <ebreak_handler>
+    80000060:	00800213          	li	tp,8
+    80000064:	04438a63          	beq	t2,tp,800000b8 <ecall_handler>
+    80000068:	00900213          	li	tp,9
+    8000006c:	04438663          	beq	t2,tp,800000b8 <ecall_handler>
+    80000070:	00b00213          	li	tp,11
+    80000074:	04438263          	beq	t2,tp,800000b8 <ecall_handler>
+    80000078:	00100213          	li	tp,1
+    8000007c:	0c438463          	beq	t2,tp,80000144 <instr_fault_handler>
+    80000080:	00500213          	li	tp,5
+    80000084:	0c438463          	beq	t2,tp,8000014c <load_fault_handler>
+    80000088:	00700213          	li	tp,7
+    8000008c:	0c438c63          	beq	t2,tp,80000164 <store_fault_handler>
+    80000090:	00c00213          	li	tp,12
+    80000094:	10438863          	beq	t2,tp,800001a4 <pt_fault_handler>
+    80000098:	00d00213          	li	tp,13
+    8000009c:	10438463          	beq	t2,tp,800001a4 <pt_fault_handler>
+    800000a0:	00f00213          	li	tp,15
+    800000a4:	10438063          	beq	t2,tp,800001a4 <pt_fault_handler>
+    800000a8:	00200213          	li	tp,2
+    800000ac:	0e438263          	beq	t2,tp,80000190 <illegal_instr_handler>
+    800000b0:	34302273          	csrr	tp,mtval
+    800000b4:	0fc000ef          	jal	ra,800001b0 <test_done>
+
+00000000800000b8 <ecall_handler>:
+    800000b8:	00002397          	auipc	t2,0x2
+    800000bc:	f603b383          	ld	t2,-160(t2) # 80002018 <_GLOBAL_OFFSET_TABLE_+0x18>
+    800000c0:	0003b023          	sd	zero,0(t2)
+    800000c4:	0013b423          	sd	ra,8(t2)
+    800000c8:	0023b823          	sd	sp,16(t2)
+    800000cc:	0033bc23          	sd	gp,24(t2)
+    800000d0:	0243b023          	sd	tp,32(t2)
+    800000d4:	0253b423          	sd	t0,40(t2)
+    800000d8:	0263b823          	sd	t1,48(t2)
+    800000dc:	0273bc23          	sd	t2,56(t2)
+    800000e0:	0483b023          	sd	s0,64(t2)
+    800000e4:	0493b423          	sd	s1,72(t2)
+    800000e8:	04a3b823          	sd	a0,80(t2)
+    800000ec:	04b3bc23          	sd	a1,88(t2)
+    800000f0:	06c3b023          	sd	a2,96(t2)
+    800000f4:	06d3b423          	sd	a3,104(t2)
+    800000f8:	06e3b823          	sd	a4,112(t2)
+    800000fc:	06f3bc23          	sd	a5,120(t2)
+    80000100:	0903b023          	sd	a6,128(t2)
+    80000104:	0913b423          	sd	a7,136(t2)
+    80000108:	0923b823          	sd	s2,144(t2)
+    8000010c:	0933bc23          	sd	s3,152(t2)
+    80000110:	0b43b023          	sd	s4,160(t2)
+    80000114:	0b53b423          	sd	s5,168(t2)
+    80000118:	0b63b823          	sd	s6,176(t2)
+    8000011c:	0b73bc23          	sd	s7,184(t2)
+    80000120:	0d83b023          	sd	s8,192(t2)
+    80000124:	0d93b423          	sd	s9,200(t2)
+    80000128:	0da3b823          	sd	s10,208(t2)
+    8000012c:	0db3bc23          	sd	s11,216(t2)
+    80000130:	0fc3b023          	sd	t3,224(t2)
+    80000134:	0fd3b423          	sd	t4,232(t2)
+    80000138:	0fe3b823          	sd	t5,240(t2)
+    8000013c:	0ff3bc23          	sd	t6,248(t2)
+    80000140:	0780006f          	j	800001b8 <write_tohost>
+
+0000000080000144 <instr_fault_handler>:
+    80000144:	34139073          	csrw	mepc,t2
+    80000148:	340292f3          	csrrw	t0,mscratch,t0
+
+000000008000014c <load_fault_handler>:
+    8000014c:	00805073          	csrwi	vstart,0
+    80000150:	341023f3          	csrr	t2,mepc
+    80000154:	00438393          	addi	t2,t2,4
+    80000158:	34139073          	csrw	mepc,t2
+    8000015c:	340292f3          	csrrw	t0,mscratch,t0
+    80000160:	30200073          	mret
+
+0000000080000164 <store_fault_handler>:
+    80000164:	00805073          	csrwi	vstart,0
+    80000168:	341023f3          	csrr	t2,mepc
+    8000016c:	00438393          	addi	t2,t2,4
+    80000170:	34139073          	csrw	mepc,t2
+    80000174:	34139073          	csrw	mepc,t2
+    80000178:	340292f3          	csrrw	t0,mscratch,t0
+
+000000008000017c <ebreak_handler>:
+    8000017c:	341023f3          	csrr	t2,mepc
+    80000180:	00438393          	addi	t2,t2,4
+    80000184:	34139073          	csrw	mepc,t2
+    80000188:	34139073          	csrw	mepc,t2
+    8000018c:	340292f3          	csrrw	t0,mscratch,t0
+
+0000000080000190 <illegal_instr_handler>:
+    80000190:	341023f3          	csrr	t2,mepc
+    80000194:	00438393          	addi	t2,t2,4
+    80000198:	34139073          	csrw	mepc,t2
+    8000019c:	340292f3          	csrrw	t0,mscratch,t0
+    800001a0:	30200073          	mret
+
+00000000800001a4 <pt_fault_handler>:
+    800001a4:	00000013          	nop
+    800001a8:	34139073          	csrw	mepc,t2
+    800001ac:	340292f3          	csrrw	t0,mscratch,t0
+
+00000000800001b0 <test_done>:
+    800001b0:	00100193          	li	gp,1
+    800001b4:	00000073          	ecall
+
+00000000800001b8 <write_tohost>:
+    800001b8:	00001f17          	auipc	t5,0x1
+    800001bc:	e43f2423          	sw	gp,-440(t5) # 80001000 <tohost>
+
+00000000800001c0 <_exit>:
+    800001c0:	ff9ff06f          	j	800001b8 <write_tohost>
+    800001c4:	fff0099b          	addiw	s3,zero,-1
+    800001c8:	03399993          	slli	s3,s3,0x33
+    800001cc:	24198993          	addi	s3,s3,577
+    800001d0:	00c99993          	slli	s3,s3,0xc
+    800001d4:	12d98993          	addi	s3,s3,301
+    800001d8:	30199073          	csrw	misa,s3
+    800001dc:	00002117          	auipc	sp,0x2
+    800001e0:	e3413103          	ld	sp,-460(sp) # 80002010 <_GLOBAL_OFFSET_TABLE_+0x10>
+
+00000000800001e4 <trap_vec_init>:
+    800001e4:	00002397          	auipc	t2,0x2
+    800001e8:	e3c3b383          	ld	t2,-452(t2) # 80002020 <_GLOBAL_OFFSET_TABLE_+0x20>
+    800001ec:	0003e393          	ori	t2,t2,0
+    800001f0:	30539073          	csrw	mtvec,t2
+
+00000000800001f4 <_finish_loop_init_mem>:
+    800001f4:	002803b7          	lui	t2,0x280
+    800001f8:	6213839b          	addiw	t2,t2,1569 # 280621 <_start-0x7fd7f9df>
+    800001fc:	00e39393          	slli	t2,t2,0xe
+    80000200:	e0038393          	addi	t2,t2,-512
+    80000204:	30039073          	csrw	mstatus,t2
+    80000208:	00000393          	li	t2,0
+    8000020c:	30439073          	csrw	mie,t2
+    80000210:	164000ef          	jal	ra,80000374 <test_done>
+    80000214:	341023f3          	csrr	t2,mepc
+    80000218:	342023f3          	csrr	t2,mcause
+    8000021c:	00300213          	li	tp,3
+    80000220:	12438063          	beq	t2,tp,80000340 <ebreak_handler>
+    80000224:	00800213          	li	tp,8
+    80000228:	04438a63          	beq	t2,tp,8000027c <ecall_handler>
+    8000022c:	00900213          	li	tp,9
+    80000230:	04438663          	beq	t2,tp,8000027c <ecall_handler>
+    80000234:	00b00213          	li	tp,11
+    80000238:	04438263          	beq	t2,tp,8000027c <ecall_handler>
+    8000023c:	00100213          	li	tp,1
+    80000240:	0c438463          	beq	t2,tp,80000308 <instr_fault_handler>
+    80000244:	00500213          	li	tp,5
+    80000248:	0c438463          	beq	t2,tp,80000310 <load_fault_handler>
+    8000024c:	00700213          	li	tp,7
+    80000250:	0c438c63          	beq	t2,tp,80000328 <store_fault_handler>
+    80000254:	00c00213          	li	tp,12
+    80000258:	10438863          	beq	t2,tp,80000368 <pt_fault_handler>
+    8000025c:	00d00213          	li	tp,13
+    80000260:	10438463          	beq	t2,tp,80000368 <pt_fault_handler>
+    80000264:	00f00213          	li	tp,15
+    80000268:	10438063          	beq	t2,tp,80000368 <pt_fault_handler>
+    8000026c:	00200213          	li	tp,2
+    80000270:	0e438263          	beq	t2,tp,80000354 <illegal_instr_handler>
+    80000274:	34302273          	csrr	tp,mtval
+    80000278:	0fc000ef          	jal	ra,80000374 <test_done>
+
+000000008000027c <ecall_handler>:
+    8000027c:	00002397          	auipc	t2,0x2
+    80000280:	d9c3b383          	ld	t2,-612(t2) # 80002018 <_GLOBAL_OFFSET_TABLE_+0x18>
+    80000284:	0003b023          	sd	zero,0(t2)
+    80000288:	0013b423          	sd	ra,8(t2)
+    8000028c:	0023b823          	sd	sp,16(t2)
+    80000290:	0033bc23          	sd	gp,24(t2)
+    80000294:	0243b023          	sd	tp,32(t2)
+    80000298:	0253b423          	sd	t0,40(t2)
+    8000029c:	0263b823          	sd	t1,48(t2)
+    800002a0:	0273bc23          	sd	t2,56(t2)
+    800002a4:	0483b023          	sd	s0,64(t2)
+    800002a8:	0493b423          	sd	s1,72(t2)
+    800002ac:	04a3b823          	sd	a0,80(t2)
+    800002b0:	04b3bc23          	sd	a1,88(t2)
+    800002b4:	06c3b023          	sd	a2,96(t2)
+    800002b8:	06d3b423          	sd	a3,104(t2)
+    800002bc:	06e3b823          	sd	a4,112(t2)
+    800002c0:	06f3bc23          	sd	a5,120(t2)
+    800002c4:	0903b023          	sd	a6,128(t2)
+    800002c8:	0913b423          	sd	a7,136(t2)
+    800002cc:	0923b823          	sd	s2,144(t2)
+    800002d0:	0933bc23          	sd	s3,152(t2)
+    800002d4:	0b43b023          	sd	s4,160(t2)
+    800002d8:	0b53b423          	sd	s5,168(t2)
+    800002dc:	0b63b823          	sd	s6,176(t2)
+    800002e0:	0b73bc23          	sd	s7,184(t2)
+    800002e4:	0d83b023          	sd	s8,192(t2)
+    800002e8:	0d93b423          	sd	s9,200(t2)
+    800002ec:	0da3b823          	sd	s10,208(t2)
+    800002f0:	0db3bc23          	sd	s11,216(t2)
+    800002f4:	0fc3b023          	sd	t3,224(t2)
+    800002f8:	0fd3b423          	sd	t4,232(t2)
+    800002fc:	0fe3b823          	sd	t5,240(t2)
+    80000300:	0ff3bc23          	sd	t6,248(t2)
+    80000304:	0780006f          	j	8000037c <write_tohost>
+
+0000000080000308 <instr_fault_handler>:
+    80000308:	34139073          	csrw	mepc,t2
+    8000030c:	340292f3          	csrrw	t0,mscratch,t0
+
+0000000080000310 <load_fault_handler>:
+    80000310:	00805073          	csrwi	vstart,0
+    80000314:	341023f3          	csrr	t2,mepc
+    80000318:	00438393          	addi	t2,t2,4
+    8000031c:	34139073          	csrw	mepc,t2
+    80000320:	340292f3          	csrrw	t0,mscratch,t0
+    80000324:	30200073          	mret
+
+0000000080000328 <store_fault_handler>:
+    80000328:	00805073          	csrwi	vstart,0
+    8000032c:	341023f3          	csrr	t2,mepc
+    80000330:	00438393          	addi	t2,t2,4
+    80000334:	34139073          	csrw	mepc,t2
+    80000338:	34139073          	csrw	mepc,t2
+    8000033c:	340292f3          	csrrw	t0,mscratch,t0
+
+0000000080000340 <ebreak_handler>:
+    80000340:	341023f3          	csrr	t2,mepc
+    80000344:	00438393          	addi	t2,t2,4
+    80000348:	34139073          	csrw	mepc,t2
+    8000034c:	34139073          	csrw	mepc,t2
+    80000350:	340292f3          	csrrw	t0,mscratch,t0
+
+0000000080000354 <illegal_instr_handler>:
+    80000354:	341023f3          	csrr	t2,mepc
+    80000358:	00438393          	addi	t2,t2,4
+    8000035c:	34139073          	csrw	mepc,t2
+    80000360:	340292f3          	csrrw	t0,mscratch,t0
+    80000364:	30200073          	mret
+
+0000000080000368 <pt_fault_handler>:
+    80000368:	00000013          	nop
+    8000036c:	34139073          	csrw	mepc,t2
+    80000370:	340292f3          	csrrw	t0,mscratch,t0
+
+0000000080000374 <test_done>:
+    80000374:	00100193          	li	gp,1
+    80000378:	00000073          	ecall
+
+000000008000037c <write_tohost>:
+    8000037c:	00001f17          	auipc	t5,0x1
+    80000380:	c83f2223          	sw	gp,-892(t5) # 80001000 <tohost>
+    80000384:	ff9ff06f          	j	8000037c <write_tohost>
+
+Disassembly of section .tohost:
+
+0000000080001000 <tohost>:
+	...
+
+0000000080001040 <fromhost>:
+	...
+
+Disassembly of section .got:
+
+0000000080002000 <_GLOBAL_OFFSET_TABLE_>:
+	...
+    80002008:	2038                	.2byte	0x2038
+    8000200a:	8000                	.2byte	0x8000
+    8000200c:	0000                	.2byte	0x0
+    8000200e:	0000                	.2byte	0x0
+    80002010:	bc74                	.2byte	0xbc74
+    80002012:	8000                	.2byte	0x8000
+    80002014:	0000                	.2byte	0x0
+    80002016:	0000                	.2byte	0x0
+    80002018:	0000                	.2byte	0x0
+    8000201a:	8000                	.2byte	0x8000
+    8000201c:	0000                	.2byte	0x0
+    8000201e:	0000                	.2byte	0x0
+    80002020:	0050                	.2byte	0x50
+    80002022:	8000                	.2byte	0x8000
+    80002024:	0000                	.2byte	0x0
+	...
+
+Disassembly of section .got.plt:
+
+0000000080002028 <.got.plt>:
+    80002028:	ffff                	.2byte	0xffff
+    8000202a:	ffff                	.2byte	0xffff
+    8000202c:	ffff                	.2byte	0xffff
+    8000202e:	ffff                	.2byte	0xffff
+	...
+
+Disassembly of section .user_stack:
+
+0000000080002038 <user_stack_start>:
+	...
+
+000000008000bc70 <kernel_instr_end>:
+    8000bc70:	00000013          	nop
+
+000000008000bc74 <user_stack_start>:
+	...
+
+00000000800158ac <kernel_instr_end>:
+    800158ac:	00000013          	nop
+
+Disassembly of section .kernel_stack:
+
+00000000800158b0 <kernel_stack_start>:
+	...
+
+000000008001d5a8 <kernel_stack_end>:
+	...
+
+000000008001d5b0 <kernel_stack_start>:
+	...
+
+00000000800252a8 <kernel_stack_end>:
+	...
+
+Disassembly of section .riscv.attributes:
+
+0000000000000000 <.riscv.attributes>:
+   0:	2c41                	.2byte	0x2c41
+   2:	0000                	.2byte	0x0
+   4:	7200                	.2byte	0x7200
+   6:	7369                	.2byte	0x7369
+   8:	01007663          	bgeu	zero,a6,14 <_start-0x7fffffec>
+   c:	0022                	.2byte	0x22
+   e:	0000                	.2byte	0x0
+  10:	7205                	.2byte	0x7205
+  12:	3676                	.2byte	0x3676
+  14:	6934                	.2byte	0x6934
+  16:	7032                	.2byte	0x7032
+  18:	5f30                	.2byte	0x5f30
+  1a:	326d                	.2byte	0x326d
+  1c:	3070                	.2byte	0x3070
+  1e:	615f 7032 5f30      	.byte	0x5f, 0x61, 0x32, 0x70, 0x30, 0x5f
+  24:	3266                	.2byte	0x3266
+  26:	3070                	.2byte	0x3070
+  28:	0800                	.2byte	0x800
+  2a:	0a01                	.2byte	0xa01
+  2c:	0b              	Address 0x000000000000002c is out of bounds.
+

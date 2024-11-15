@@ -1,0 +1,8 @@
+name: ka_env_comp
+description: Ka core Verification environment compilation
+type: build
+
+builds:
+  compile-env:
+    cmd: make
+    args: compile_all

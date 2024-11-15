@@ -1,0 +1,10 @@
+name: sargantana_random_riscvdv_tests
+description: Sargantana core riscv-dv random tests regression
+type: test
+
+tests:
+    rtype: set
+    test: tests/build/generated_tests/
+    cmd: make run
+    args:
+        - SEED=random

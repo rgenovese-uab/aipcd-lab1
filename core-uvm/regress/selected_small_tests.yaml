@@ -1,0 +1,8 @@
+name: ka_selected_small_tests
+description: Ka core selected tests example regression
+type: test
+
+tests:
+    rtype: set
+    test: /eda/verification/lagarto-ka-dv/random_tests/regression/small/small_ranktest/bin/
+    cmd: make run

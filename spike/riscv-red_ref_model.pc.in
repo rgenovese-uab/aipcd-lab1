@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@prefix@
+libdir=${prefix}/@libdir@
+includedir=${prefix}/@includedir@
+
+Name: red_ref_model
+Description: Vector Reduction Reference Model
+Version: git
+Libs: -Wl,-rpath,${libdir} -L${libdir} -lred_ref_model
+Cflags: -I${includedir}
+URL: http://riscv.org/download.html#tab_spike

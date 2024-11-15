@@ -1,0 +1,29 @@
+# list of dg-options per test
+- test_name: "920612-1.c"
+  dg-options: "-fwrapv"
+
+- test_name: "920711-1.c"
+  dg-options: "-fwrapv"
+
+- test_name: "930526-1.c"
+  dg-options: "-fgnu89-inline"
+
+- test_name: "961223-1.c"
+  dg-options: "-fgnu89-inline"
+
+- test_name: "980608-1.c"
+  dg-options: "-fgnu89-inline"
+
+- test_name: "990127-2.c"
+  dg-options: "-mpc64"
+
+- test_name: "20001121-1.c"
+  dg-options: "-fgnu89-inline"
+
+- test_name: "20010129-1.c"
+  dg-options: "-mtune=rocket"
+
+- test_name: "20020107-1.c"
+  dg-options: "-fgnu89-inline"
+
+- test_name: 

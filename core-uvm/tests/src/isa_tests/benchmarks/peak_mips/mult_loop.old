@@ -1,0 +1,20 @@
+.global asm_basic_loop
+asm_basic_loop:
+  xor x5, x5, x5
+  blez a0, fin_loop
+ini_loop:
+  mul x6, x6, x6
+  mul x7, x7, x7
+  mul x28, x28, x28
+  mul x29, x29, x29
+  mul x30, x30, x30
+  mul x31, x31, x31
+  mul x6, x6, x6
+  mul x7, x7, x7
+  div x28, x28, x28
+  div x29, x29, x29
+  div x30, x30, x30
+  addi x5,x5,1
+  bne  x5,x10, ini_loop
+fin_loop:
+  ret

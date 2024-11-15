@@ -1,0 +1,2 @@
+$(VERIF)/tb/uvmt/test_harness_sargantana.sv
+$(VERIF)/tb/uvmt/top_tb_sargantana.sv

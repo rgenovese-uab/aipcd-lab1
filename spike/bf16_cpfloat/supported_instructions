@@ -1,0 +1,100 @@
+### Supported Instructions ###
+vfadd_vf            # bf16_add
+vfadd_vv            # bf16_add
+vfclass_v           # bf16_classify
+vfdiv_vf            # bf16_div
+vfdiv_vv            # bf16_div
+vfdot_vv            # bf16_add, bf16_mul
+vfmul_vf            # bf16_mul
+vfmul_vv            # bf16_mul
+vfmacc_vf           # bf16_mulAdd
+vfmacc_vv           # bf16_mulAdd
+vfmadd_vf           # bf16_mulAdd
+vfmadd_vv           # bf16_mulAdd
+vfmax_vf            # bf16_max
+vfmax_vv            # bf16_max
+vfmerge_vfm         # Inline
+vfmin_vf            # bf16_min
+vfmin_vv            # bf16_min
+vfmsac_vf           # bf16_mulAdd
+vfmsac_vv           # bf16_mulAdd
+vfmsub_vf           # bf16_mulAdd
+vfmsub_vv           # bf16_mulAdd
+vfmv_f_s            # Inline
+vfmv_s_f            # Inline
+vfmv_v_f            # Inline
+vfnmacc_vf          # bf16_mulAdd
+vfnmacc_vv          # bf16_mulAdd
+vfnmadd_vf          # bf16_mulAdd
+vfnmadd_vv          # bf16_mulAdd
+vfnmsac_vf          # bf16_mulAdd
+vfnmsac_vv          # bf16_mulAdd
+vfnmsub_vf          # bf16_mulAdd
+vfnmsub_vv          # bf16_mulAdd
+vfrdiv_vf           # bf16_div
+vfredmax_vs         # bf16_max
+vfredmin_vs         # bf16_min
+vfredosum_vs        # bf16_add
+vfredsum_vs         # bf16_add
+vfrsub_vf           # bf16_sub
+vfsgnjn_vf          # Macro / inline (decode.h)
+vfsgnjn_vv          # Macro / inline (decode.h)
+vfsgnjx_vf          # Macro / inline (decode.h)
+vfsgnjx_vv          # Macro / inline (decode.h)
+vfsgnj_vf           # Macro / inline (decode.h)
+vfsgnj_vv           # Macro / inline (decode.h)
+vfsqrt_v            # bf16_sqrt
+vfsub_vf            # bf16_sub
+vfsub_vv            # bf16_sub
+# Widen Arithmetics
+vfwadd_vf           # Macro (decode.h), f32_add
+vfwadd_vv           # Macro (decode.h), f32_add
+vfwadd_wf           # Macro (decode.h), f32_add
+vfwadd_wv           # Macro (decode.h), f32_add    
+vfwmacc_vf          # Macro (decode.h), f32_mulAdd
+vfwmacc_vv          # Macro (decode.h), f32_mulAdd
+vfwmsac_vf          # Macro (decode.h), f32_mulAdd
+vfwmsac_vv          # Macro (decode.h), f32_mulAdd
+vfwmul_vf           # Macro (decode.h), f32_mul
+vfwmul_vv           # Macro (decode.h), f32_mul
+vfwnmacc_vf         # Macro (decode.h), f32_mulAdd
+vfwnmacc_vv         # Macro (decode.h), f32_mulAdd
+vfwnmsac_vf         # Macro (decode.h), f32_mulAdd
+vfwnmsac_vv         # Macro (decode.h), f32_mulAdd
+vfwredosum_vs       # Macro (decode.h), f32_add
+vfwredsum_vs        # Macro (decode.h), f32_add
+vfwsub_vf           # Macro (decode.h), f32_sub
+vfwsub_vv           # Macro (decode.h), f32_sub
+vfwsub_wf           # Macro (decode.h), f32_sub
+vfwsub_wv           # Macro (decode.h), f32_sub
+# Comp
+vmfeq_vf            # Macro (decode.h), f32_eq
+vmfeq_vv            # Macro (decode.h), f32_eq
+vmfge_vf            # Macro (decode.h), f32_le
+vmfgt_vf            # Macro (decode.h), f32_lt
+vmfle_vf            # Macro (decode.h), f32_le
+vmfle_vv            # Macro (decode.h), f32_le
+vmflt_vf            # Macro (decode.h), f32_lt
+vmflt_vv            # Macro (decode.h), f32_lt
+vmfne_vf            # Macro (decode.h), f32_ne
+vmfne_vv            # Macro (decode.h), f32_ne
+# Conv
+vfcvt_x_f_v         # bf16_to_i16
+vfncvt_f_f_w        # f32_to_bf16
+vfncvt_rod_f_f_w    # f32_to_bf16
+vfncvt_f_xu_w       # ui32_to_f32, f32_to_bf16
+vfncvt_f_x_w        # i32_to_f32, f32_to_bf16
+vfncvt_xu_f_w       # f32_to_ui32, cast
+vfncvt_x_f_w        # f32_to_i32, cast
+vfwcvt_f_f_v        # bf16_to_f32
+vfwcvt_xu_f_v       # bf16_to_fp32, fp32_to_ui32
+vfwcvt_x_f_v        # bf16_to_fp32, fp32_to_i32
+vfwcvt_f_xu_v       # Macro (decode.h), ui32_to_f32
+vfwcvt_f_x_v        # Macro (decode.h), i32_to_f32
+
+### Unsupported ###
+
+# Conv
+vfcvt_f_xu_v
+vfcvt_f_x_v
+vfcvt_xu_f_v

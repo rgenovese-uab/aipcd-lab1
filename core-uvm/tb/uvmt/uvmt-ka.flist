@@ -1,0 +1,3 @@
+$(VERIF)/tb/uvmt/ka_interface.sv
+$(VERIF)/tb/uvmt/test_harness_ka.sv
+$(VERIF)/tb/uvmt/top_tb_ka.sv
