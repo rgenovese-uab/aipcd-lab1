@@ -2768,7 +2768,11 @@
 #define MASK_ZUNPKD831 0xfff0707f
 #define MATCH_ZUNPKD832 0xad700077
 #define MASK_ZUNPKD832 0xfff0707f
-
+//rgenovese - aipcd-lab1
+#define MATCH_CUSTOM1 0x0B      //custom-0
+#define MATCH_CUSTOM2 0x2B      //custom-1
+#define MASK_CUSTOM  0x7F       //Mask covering the 7-bit opcode field
+//--------------------------------------------------------------------
 #define CSR_FFLAGS 0x1
 #define CSR_FRM 0x2
 #define CSR_FCSR 0x3
@@ -4492,6 +4496,9 @@ DECLARE_INSN(zunpkd820, MATCH_ZUNPKD820, MASK_ZUNPKD820)
 DECLARE_INSN(zunpkd830, MATCH_ZUNPKD830, MASK_ZUNPKD830)
 DECLARE_INSN(zunpkd831, MATCH_ZUNPKD831, MASK_ZUNPKD831)
 DECLARE_INSN(zunpkd832, MATCH_ZUNPKD832, MASK_ZUNPKD832)
+//rgenovese - aipcd-lab1
+DECLARE_INSN(rgb2yub, MATCH_CUSTOM1, MASK_CUSTOM)
+//------------------------------------------------------
 #endif
 #ifdef DECLARE_CSR
 DECLARE_CSR(gmx_t, CSR_GMX_T)

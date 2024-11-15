@@ -247,3 +247,18 @@ static uint32_t srli(unsigned int dest, unsigned int src, uint8_t shamt)
 		(dest << 7) |
 		MATCH_SRLI;
 }
+
+//rgenovese - aipcd-lab1
+/*
+funct7 is 0 (assuming no specific function differentiation is needed).
+rs1 is the source register containing the RGB data.
+rd is the destination register for the YUB result.
+MATCH_RGB2YUB is the custom opcode.
+*/
+static uint32_t rgb2yub(unsigned int rd, unsigned int rs1) __attribute__ ((unused));
+static uint32_t rgb2yub(unsigned int rd, unsigned int rs1) {
+  return (0 << 25) |    // Use this to define the `funct7` bits if needed at bits [31:25]
+         (rs1 << 15) |  // Source register (rs1) at bits [19:15]
+         (rd << 7) |    // Destination register (rd) at bits [11:7]
+         MATCH_CUSTOM1; // Opcode for RGB2YUB
+}
