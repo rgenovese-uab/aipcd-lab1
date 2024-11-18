@@ -228,6 +228,14 @@ void htif_t::clear_chunk(addr_t taddr, size_t len)
     write_chunk(taddr + pos, std::min(len - pos, chunk_max_size()), zeros);
 }
 
+void htif_t::check_tohost(){
+  uint64_t tohost;
+  if ((tohost = from_target(mem.read_uint64(tohost_addr))) != 0){
+    fprintf(stdout, "TOHOST ADDR %x WAS WRITTEN W/VALUE %x\n", tohost_addr, tohost );
+    reach_tohost = true;
+  }
+}
+
 int htif_t::run()
 {
   start();

@@ -270,9 +270,9 @@ void sim_t::step(size_t n)
         //if (clint) clint->increment(INTERLEAVE / INSNS_PER_RTC_TICK);
         if (ns16550) ns16550->tick();
       }
-
       // host->switch_to();
     }
+    htif_t::check_tohost();
   }
 }
 

@@ -33,6 +33,8 @@ class htif_t : public chunked_memif_t
   bool has_reached_tohost(){ return reach_tohost ;}
   addr_t get_tohost_addr(){ return tohost_addr; }
 
+  void check_tohost();
+
 
   virtual memif_t& memif() { return mem; }
 
