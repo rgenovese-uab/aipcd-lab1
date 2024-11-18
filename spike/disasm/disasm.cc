@@ -2114,7 +2114,7 @@ void disassembler_t::add_instructions(const isa_parser_t* isa)
   }
 
   if (isa->extension_enabled(EXT_XGMX)) {
-    DISASM_INSN("gmx.v", gmx_v, 0, {&xrd, &xrs1, &xrs2});
+    //DISASM_INSN("gmx.v", gmx_v, 0, {&xrd, &xrs1, &xrs2});
     DISASM_INSN("gmx.h", gmx_h, 0, {&xrd, &xrs1, &xrs2});
     DISASM_INSN("gmx.tb", gmx_tb, 0, {&xrd, &xrs1, &xrs2});
     DISASM_INSN("gmx.tps", gmx_tps, 0, {&xrs1, &xrs2});

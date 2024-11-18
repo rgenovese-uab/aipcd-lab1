@@ -160,7 +160,6 @@ riscv_insn_ext_i = \
 	fence_i \
 
 riscv_insn_ext_custom = \
-	gmx_v \
 	gmx_h \
 	gmx_tb \
 	gmx_tps \

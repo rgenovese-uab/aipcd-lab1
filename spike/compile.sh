@@ -95,8 +95,8 @@ cd build
 
 if [[ ! -e config.log ]];then
     vlen=$(echo "$varch" | cut -d ',' -f 1 | cut -d ':' -f 2)
-    echo "../configure --with-isa=RV64IMAFDC --with-varch=$varch --enable-commitlog --with-target=$vl_arg"
-    ../configure --with-isa="RV64IMAFD_xgmx" --with-varch=$varch --enable-commitlog --with-target=$vl_arg
+    echo "../configure --with-isa=RV64IMAFD --with-varch=$varch --enable-commitlog --with-target=$vl_arg"
+    ../configure --with-isa="RV64IMAFD" --with-varch=$varch --enable-commitlog --with-target=$vl_arg
     make clean
 fi
 
