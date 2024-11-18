@@ -360,6 +360,10 @@ void sim_t::interactive()
     {
       set_procs_debug(true);
       step(1);
+      if( htif_t::has_reached_tohost() ){
+        fprintf(stdout, "------ TEST FINISHED ------\n" );
+        htif_t::stop();
+      }
 #ifdef HAVE_BOOST_ASIO
       wout(&bout); // socket output, if required
 #endif
