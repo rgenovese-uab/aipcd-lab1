@@ -1272,6 +1272,152 @@ int spike_wrapper::run_until_vector_ins(core_state_t* core_state) {
     return !s->done();
 }
 
+// rgenovese - aipcd lab2 ---------------------------------------------------------
+
+bool spike_wrapper::is_not_rgb2yuv(insn_t ins) {
+    //check if the instruction is rgb2yub
+    //return result negated
+    int opcode, funct7, funct3;
+    opcode = ins.x(0,7);
+
+    if( opcode == MATCH_CUSTOM1 ){
+        return false;
+    }
+    return true;
+}
+
+int spike_wrapper::run_until_rgb2yuv_instruction(core_state_t* core_state) {
+    sim_t* sim = s;
+    uint64_t prev_src1_value, prev_src2_value;
+    processor_t* core = s->get_core(0);
+
+    // State before executing the instruction
+    state_t* p_state = core->get_state();
+
+    // Get the register file before destination register is overwritten
+    copy_vector_reg_file(core);
+    copy_regs_from_state(p_state)
+    reg_t pc = core->get_state()->pc;
+    reg_t prev_pc = pc;
+
+    // Maybe we could use check_exit_code inside step
+    s->step(1);
+    check_exit_code(sim->exit_code());
+    insn_t ins = core->get_state()->current_instruction;
+    pc = core->get_state()->pc;
+    //reg_t prev_pc = pc;
+    prev_src1_value = core->get_state()->XPR[ins.rs1()];
+    prev_src2_value = core->get_state()->XPR[ins.rs2()];
+
+    core = sim->get_core(0);
+    //printf("pc: %x ins: %x\n", prev_pc, ins.bits());
+
+    while(is_not_rgb2yuv(ins) || core->get_state()->prv == PRV_S || (core->trap_instr && core_state->csr.trap_illegal)) {
+        if (not SMD_mode and (uint32_t)ins.bits() == 0xc00022f3)
+            return 0;
+        if (SMD_mode and (uint32_t)ins.bits() == 0x00000073)
+            return 0;
+        uint64_t tohost;
+        tohost = s->from_target(s->memif().read_uint64(s->get_tohost_addr()));
+        if( tohost  ){
+            //printf("TOHOST HAS BEEN WRITTEN\n");
+            return 0;
+        }
+        copy_vector_reg_file(core);
+        copy_regs_from_state(core->get_state())
+        prev_src1_value = core->get_state()->XPR[ins.rs1()];
+        prev_src2_value = core->get_state()->XPR[ins.rs2()];
+        s->step(1);
+        check_exit_code(sim->exit_code());
+        ins = core->get_state()->current_instruction;
+        prev_pc = pc;
+        pc = core->get_state()->pc;
+        //printf("prev_pc: %x pc: %x ins: %x\n", prev_pc, pc, ins.bits());
+    }
+    memif_t mem = s->memif();
+
+
+    core_state->pc  = prev_pc;
+    core_state->ins = ins.bits();
+    core_state->dst_num     = ins.rd();
+    core_state->dst_value   = core->get_state()->XPR[ins.rd()];
+    core_state->src1_num    = ins.rs1();
+    core_state->src1_value  = (ins.rs1() == ins.rd()) ? prev_src1_value : core->get_state()->XPR[ins.rs1()]; //if (ins.rs1() == ins.rd()) src1_value = prev_src1_value;
+    core_state->src2_num    = ins.rs2();
+    core_state->src2_value  = (ins.rs2() == ins.rd()) ? prev_src2_value : core->get_state()->XPR[ins.rs2()]; //if (ins.rs2() == ins.rd()) src2_value = prev_src2_value;
+    
+    uint64_t funct3 = ins.x(12,3);
+    uint64_t opcode = ins.x(0,7);
+    uint64_t funct6 = ins.x(26, 6);
+    uint64_t mop = ins.x(26, 3);
+
+    if (opcode == 0x57){ //OPV, for vector arithmetic instructions
+      switch(funct3){
+        case OPIVV:
+        case OPFVV:
+        case OPIVI:
+          core_state->src1_valid = 0;
+          core_state->src2_valid = 0;
+          break;
+        case OPIVX:
+        case OPFVF:
+        case OPMVX:
+          core_state->src1_valid = 1;
+          core_state->src2_valid = 0;
+          break;
+        //check for vext
+        case OPMVV:
+          core_state->src2_valid = 0;
+          if( funct6 == 0xc ) //001100
+            core_state->src1_valid = 1;
+          else
+            core_state->src1_valid = 0;
+          break;
+        case OPCFG:
+          //needs to check for vsetvl/vsetvli
+          core_state->src1_valid = 1;
+          if(ins.x(31,1)){ //vsetvl
+            core_state->src2_valid = 1;
+          }
+          else{ //vsetvli
+            core_state->src2_valid = 0;
+          }
+          break;
+          default:
+            core_state->src1_valid = 0;
+            core_state->src2_valid = 0;
+          break;
+      }
+    } else if ((opcode == 0x07) || (opcode ==0x27)) {
+        core_state->src1_valid = 1;
+        core_state->src2_valid = ((mop == 0x2) || (mop == 0x6));
+    }
+
+    save_scalar_state(core, core_state);
+
+    save_vector_state(core, core_state);
+
+
+    if(core->trap_instr and ! core_state->csr.trap_illegal ){
+        std::cout << std::hex << "[SPIKE-DPI] Spike error in INS: " << ins.bits() << std::endl;
+         return TEST_ERROR;
+    }
+    if(core->trap_illegal){
+       // std::cout << std::hex << "[SPIKE-DPI] [ " << prev_pc << " ] Illegal instruction on INS: " << ins.bits() << std::endl;
+        if(const char* env_p = std::getenv("EXIT_ON_ILLEGAL")) {
+            int mode = atoi(env_p);
+            if (mode){
+                return ILLEGAL_INSTR;
+            }
+        }
+    }
+
+    //this->print_core_state(core_state);
+    //std::cout<<"SPIKE SENT INSTRUCTION "<<core_state->disasm<<" CSTRING "<<(char*)core->get_disassembler()->disassemble(ins).c_str()<<std::endl;
+    return !s->done();
+}
+// ------------------------------------------------------------------------------------
+
 void print_core_state(core_state_t* core_state) {
 
     std::cout << std::hex << core_state->pc << " " <<

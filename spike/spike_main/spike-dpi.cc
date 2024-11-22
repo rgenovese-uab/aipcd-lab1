@@ -123,6 +123,13 @@ extern "C" int spike_run_until_vector_ins(core_state_t* core_state){
     return tmp;
 }
 
+// rgenovese - aipcd lab2 ------------------------------------------
+extern "C" int run_until_rgb2yuv_instruction(core_state_t* core_state){
+    auto tmp = spike->run_until_rgb2yuv_instruction(core_state);
+    return tmp;
+}
+//------------------------------------------------------------------
+
 extern "C" reg_t address_translate(reg_t addr, reg_t len, access_type type, reg_t satp, reg_t priv_lvl, reg_t mstatus, reg_t* exc_error){
     return spike->address_translate(addr, len, type, satp, priv_lvl, mstatus, exc_error);
 }
