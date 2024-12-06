@@ -1,3 +1,0 @@
--incdir ${RTLDIR}
--incdir ${RTLDIR}/rtl
--incdir ${RTLDIR}/rtl/dcache/rtl/include
