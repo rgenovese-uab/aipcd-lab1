@@ -121,7 +121,7 @@ public:
 
     int run_until_vector_ins(core_state_t* core_info);
 
-    // rgenovese - aipcd lab2 ------------------------------------------
+    // rgenovese - aipcd lab3 ------------------------------------------
     int run_until_rgb2yuv_instruction(core_state_t* core_info);
     bool is_not_rgb2yuv(insn_t ins);
     // -----------------------------------------------------------------

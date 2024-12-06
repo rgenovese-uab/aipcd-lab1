@@ -123,8 +123,8 @@ extern "C" int spike_run_until_vector_ins(core_state_t* core_state){
     return tmp;
 }
 
-// rgenovese - aipcd lab2 ------------------------------------------
-extern "C" int run_until_rgb2yuv_instruction(core_state_t* core_state){
+// rgenovese - aipcd lab3 ------------------------------------------
+extern "C" int spike_run_until_rgb2yuv_instruction(core_state_t* core_state){
     auto tmp = spike->run_until_rgb2yuv_instruction(core_state);
     return tmp;
 }

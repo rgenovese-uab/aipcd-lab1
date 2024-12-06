@@ -1272,7 +1272,7 @@ int spike_wrapper::run_until_vector_ins(core_state_t* core_state) {
     return !s->done();
 }
 
-// rgenovese - aipcd lab2 ---------------------------------------------------------
+// rgenovese - aipcd lab3 ---------------------------------------------------------
 
 bool spike_wrapper::is_not_rgb2yuv(insn_t ins) {
     //check if the instruction is rgb2yub
