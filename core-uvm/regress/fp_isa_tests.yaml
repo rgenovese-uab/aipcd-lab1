@@ -1,9 +1,0 @@
-name: ka_fp_isa_tests
-description: Ka core Risc-v FP isa tests
-type: test
-
-tests:
-    build: compile-env
-    rtype: set
-    test: tests/build/isa_tests_verilator_fp/
-    cmd: make run

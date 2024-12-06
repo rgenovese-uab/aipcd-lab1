@@ -1,3 +1,0 @@
--F $(VERIF)/tb/dut/standalone_config.f
--F $(VERIF)/tb/dut/rtl.flist
-tb/dut/dut_pkg.sv

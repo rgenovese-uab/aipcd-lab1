@@ -1,8 +1,0 @@
-name: ka_random_failed_tests
-description: Ka core random failed tests example regression
-type: test
-
-tests:
-    rtype: set
-    test: /eda/verification/lagarto-ka-dv/random_tests/failed_tests/bin/
-    cmd: make run

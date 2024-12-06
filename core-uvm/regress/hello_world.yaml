@@ -1,9 +1,0 @@
-name: ka_hello_world
-description: Ka core hello world regression
-type: test
-
-tests:
-    build: compile-env
-    rtype: single
-    test: tests/build/isa_tests/rv64ui-p-addi
-    cmd: make run

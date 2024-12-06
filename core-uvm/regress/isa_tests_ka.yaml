@@ -1,9 +1,0 @@
-name: ka_isa_check
-description: Ka core Risc-v isa tests
-type: test
-
-tests:
-    build: compile-env
-    rtype: set
-    test: tests/build/isa_tests/
-    cmd: make run
