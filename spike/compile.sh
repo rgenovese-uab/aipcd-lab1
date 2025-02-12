@@ -166,6 +166,6 @@ g++ -std=c++17 -L. -Wl,--export-dynamic -Wl,-rpath,/usr/local/lib -o spike  \
         fdt_sw.o \
         libspike_main.a libriscv.a libsoftfloat.a libred_ref_model.a libfesvr.a \
         $obj_o \
-        -lpthread -ldl -lpthread -lboost_regex
+        -lpthread -ldl -lpthread #-lboost_regex
 info
 exit

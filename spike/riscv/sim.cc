@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 
 volatile bool ctrlc_pressed = false;
 static void handle_signal(int sig)
