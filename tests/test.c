@@ -20,7 +20,7 @@ int main() {
     uint32_t rgb = (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF);
 
     // Call the custom instruction with the packed RGB value
-    uint32_t yub = rgb2yub(rgb); //result should be 0x4CC07B
+    uint32_t yub = rgb2yub(rgb); //result should be 0x9ED255 (Y<<16 | U<<8 | V)
 
     // Finish test by writing YUB value to tohost
     tohost = yub; // Example output mechanism for debugging
